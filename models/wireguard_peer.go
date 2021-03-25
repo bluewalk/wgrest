@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -38,6 +39,24 @@ type WireguardPeer struct {
 	// Required: true
 	// Min Length: 32
 	PublicKey *string `json:"public_key"`
+
+	// endpoint
+	Endpoint string `json:"endpoint"`
+
+	// persistent keep alive
+	PersistentKeepAlive string `json:"persistent_keep_alive,omitempty"`
+
+	// latest handshake
+	LastHandshake time.Time `json:"last_handshake"`
+
+	// received bytes
+	ReceiveBytes int64 `json:"receive_bytes"`
+
+	// transmitted bytes
+	TransmitBytes int64 `json:"transmit_bytes"`
+
+	// protocol version
+	ProtocolVersion int `json:"protocol_version"`
 }
 
 // Validate validates this wireguard peer

@@ -188,11 +188,22 @@ func getPeerByWGPeer(peer wgtypes.Peer) (*models.WireguardPeer, error) {
 		return nil, err
 	}
 
+	var keepAlive string
+	if peer.PersistentKeepaliveInterval > 0 {
+		keepAlive = peer.PersistentKeepaliveInterval.String()
+	}
+
 	return &models.WireguardPeer{
-		PublicKey:    &publicKey,
-		PresharedKey: presharedKey,
-		AllowedIps:   allowedIPs,
-		PeerID:       peerID,
+		PublicKey:           &publicKey,
+		PresharedKey:        presharedKey,
+		AllowedIps:          allowedIPs,
+		PeerID:              peerID,
+		Endpoint:            peer.Endpoint.String(),
+		PersistentKeepAlive: keepAlive,
+		LastHandshake:       peer.LastHandshakeTime,
+		ReceiveBytes:        peer.ReceiveBytes,
+		TransmitBytes:       peer.TransmitBytes,
+		ProtocolVersion:     peer.ProtocolVersion,
 	}, nil
 }
 
